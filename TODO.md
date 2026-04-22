@@ -4,6 +4,67 @@ Task list for building the MVP. Work top-to-bottom within each section.
 
 ---
 
+## Session Plan
+
+Six sessions covering all MVP tasks. Sessions 1–3 are strictly sequential (each builds on the previous). Session 4 (frontend) can begin in parallel with Session 3 once the API contract is agreed. Sessions 5–6 are sequential and depend on all prior sessions being complete.
+
+| Session | Focus | Key Deliverables | Depends On |
+|---------|-------|-----------------|------------|
+| **S1** | Project Init & Backend Scaffold | Git repo, monorepo structure, `.env.example`, GCP APIs enabled, Node.js project, Dockerfile, `GET /health` | — |
+| **S2** | Backend Data Services | Cloud Storage bucket + `uploadImage`, file validation, Firestore DB + `createDocument` / `updateDocument` / `getDocument` / `listDocuments` | S1 |
+| **S3** | Backend AI + API Endpoints | Vertex AI client, `analyzeImage`, `parseAIResponse`, error handling, `POST /documents`, `GET /documents/:id`, `GET /documents` | S2 |
+| **S4** | Frontend | React/JS scaffold, Upload View (camera, preview, loading, errors), Result View, optional History View | S1 (S3 for full integration) |
+| **S5** | Deployment & Infrastructure | Service account + IAM roles, Cloud Run deploy, frontend hosting, CORS | S3 + S4 |
+| **S6** | Testing, Validation & Security | iPhone Safari tests, classification tests, error-path tests, security hardening checklist | S5 |
+
+### Session Detail
+
+#### S1 — Project Init & Backend Scaffold
+- Initialize git repository and set up `.gitignore`
+- Create monorepo folder structure: `/frontend`, `/backend`
+- Create `.env.example`
+- Enable GCP APIs: Cloud Run, Cloud Storage, Firestore, Vertex AI
+- Initialize Node.js (or Python) project in `/backend`, install dependencies
+- Configure environment variables in app
+- Add `Dockerfile`
+- Add `GET /health` endpoint
+
+#### S2 — Backend Data Services
+- Create GCP Cloud Storage bucket
+- Implement `uploadImage(file)` service
+- Add file-type (JPEG/PNG) and size validation at upload boundary
+- Create Firestore database (Native mode)
+- Implement `createDocument`, `updateDocument`, `getDocument`, `listDocuments`
+
+#### S3 — Backend AI Integration & API Endpoints
+- Configure Vertex AI client with Gemini model
+- Implement `analyzeImage(imageUrl)` and `parseAIResponse(response)`
+- Handle AI errors → set Firestore status to `"error"`
+- Implement `POST /documents` (full upload → Storage → Firestore → Vertex AI → response pipeline)
+- Implement `GET /documents/:id` and `GET /documents`
+
+#### S4 — Frontend Development
+- Initialize React (or plain JS) SPA in `/frontend`, configure Vite/CRA
+- Set up env variable for backend API URL
+- Build Upload View: camera file input, image preview, POST request, loading indicator, error display
+- Build Result View: document type + extracted fields, "Scan another" button
+- *(Optional)* Build Document History View: fetch + display `GET /documents`
+
+#### S5 — Deployment & Infrastructure
+- Create service account with roles: `storage.objectAdmin`, `datastore.user`, `aiplatform.user`
+- Build and push Docker image to Artifact Registry; deploy Cloud Run service (min instances = 0)
+- Build frontend static assets; host on Cloud Storage static site or Firebase Hosting
+- Configure CORS on backend for frontend origin
+
+#### S6 — Testing, Validation & Security
+- Test image upload from iPhone Safari (camera + gallery)
+- Test classification: invoice, receipt, unrecognized document
+- Verify Firestore record lifecycle and Cloud Storage object creation
+- Test error paths: invalid file type, Vertex AI failure
+- Security checklist: no credentials committed, no raw image in logs, no stack traces in responses, IAM least privilege confirmed
+
+---
+
 ## 1. Project Setup
 
 - [ ] Initialize git repository and set up `.gitignore` (node_modules, .env, service account keys)
