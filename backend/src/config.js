@@ -16,5 +16,6 @@ module.exports = {
   vertexAiModel: process.env.VERTEX_AI_MODEL,
   vertexAiLocation: process.env.VERTEX_AI_LOCATION || 'us-central1',
   firestoreCollection: process.env.FIRESTORE_COLLECTION,
+  corsOrigin: process.env.CORS_ORIGIN || '',
   port: parseInt(process.env.PORT || '8080', 10),
 };
