@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# GCP credentials
+*.json
+!package.json
+!package-lock.json
+
+# Terraform
+infra/.terraform/
+infra/.terraform.lock.hcl
+infra/terraform.tfstate
+infra/terraform.tfstate.backup
+infra/terraform.tfvars
+
+# Build output
+frontend/dist/
+frontend/build/
+
+# OS
+.DS_Store

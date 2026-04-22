@@ -1,0 +1,7 @@
+project_id       = "your-gcp-project-id"
+region           = "europe-central2"
+vertex_ai_region = "europe-west4"
+vertex_ai_model  = "gemini-1.5-flash-002"
+app_name         = "docscanner"
+github_owner     = "your-github-username-or-org"
+github_repo      = "your-repo-name"
