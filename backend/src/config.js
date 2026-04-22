@@ -14,6 +14,7 @@ module.exports = {
   gcpProjectId: process.env.GCP_PROJECT_ID,
   storageBucket: process.env.STORAGE_BUCKET,
   vertexAiModel: process.env.VERTEX_AI_MODEL,
+  vertexAiLocation: process.env.VERTEX_AI_LOCATION || 'us-central1',
   firestoreCollection: process.env.FIRESTORE_COLLECTION,
   port: parseInt(process.env.PORT || '8080', 10),
 };
