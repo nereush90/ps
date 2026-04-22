@@ -1,17 +1,4 @@
 steps:
-  - id: frontend-install
-    name: node:20-alpine
-    entrypoint: npm
-    args: [ci]
-    dir: frontend
-
-  - id: frontend-build
-    name: node:20-alpine
-    entrypoint: npm
-    args: [run, build]
-    dir: frontend
-    waitFor: [frontend-install]
-
   - id: docker-build
     name: gcr.io/cloud-builders/docker
     args:
@@ -21,7 +8,6 @@ steps:
       - -t
       - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_APP_NAME}/${_APP_NAME}:latest
       - .
-    waitFor: [frontend-build]
 
   - id: docker-push
     name: gcr.io/cloud-builders/docker
